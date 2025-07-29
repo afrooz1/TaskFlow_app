@@ -21,6 +21,8 @@ const Login = () => {
       [name]: value
     }));
   };
+  console.log('BASE URL:', import.meta.env.VITE_API_BASE_URL);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

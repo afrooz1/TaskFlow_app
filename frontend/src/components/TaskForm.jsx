@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const TaskForm = ({ onTaskCreated, editingTask, onTaskUpdated, cancelEdit }) => {
   const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ const TaskForm = ({ onTaskCreated, editingTask, onTaskUpdated, cancelEdit }) => 
 
       if (editingTask) {
         const res = await axios.put(
-          `http://localhost:3000/api/tasks/${editingTask._id}`,
+          `${baseURL}/tasks/${editingTask._id}`,
           taskData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -64,7 +65,7 @@ const TaskForm = ({ onTaskCreated, editingTask, onTaskUpdated, cancelEdit }) => 
         onTaskUpdated(res.data);
       } else {
         const res = await axios.post(
-          "http://localhost:3000/api/tasks",
+          `${baseURL}/tasks`,
           taskData,
           { headers: { Authorization: `Bearer ${token}` } }
         );

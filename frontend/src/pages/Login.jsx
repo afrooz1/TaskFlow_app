@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const Login = () => {
   const [formData, setFormData] = useState({ 
@@ -33,7 +34,7 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/login', formData);
+      const res = await axios.post(`${baseURL}/auth/login`, formData);
       localStorage.setItem('user', JSON.stringify(res.data));
       
       window.dispatchEvent(new Event("userChanged"));

@@ -1,13 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 const TaskCard = ({ task, onUpdate, onDelete }) => {
   const token = localStorage.getItem('token');
 
   const toggleStatus = async () => {
     try {
       const res = await axios.put(
-        `http://localhost:3000/api/tasks/${task._id}`,
+        `${baseURL}/tasks/${task._id}`,
         { completed: !task.completed },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -20,7 +22,7 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:3000/api/tasks/${task._id}`,
+        `${baseURL}/tasks/${task._id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       onDelete(task._id);
@@ -51,7 +53,7 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
           {task.completed ? 'Completed' : 'Pending'}
         </span>
       </div>
-      
+
       <p className="text-gray-600 mb-4 line-clamp-3">
         {task.description || 'No description provided'}
       </p>

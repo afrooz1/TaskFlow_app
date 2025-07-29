@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import TaskForm from './TaskForm';
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -14,7 +15,7 @@ const TaskList = () => {
   const fetchTasks = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get("http://localhost:3000/api/tasks", {
+      const res = await axios.get(`${baseURL}/tasks`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
       setTasks(res.data);
@@ -32,7 +33,7 @@ const TaskList = () => {
   const toggleComplete = async (task) => {
     try {
       await axios.put(
-        `http://localhost:3000/api/tasks/${task._id}`,
+        `${baseURL}/tasks/${task._id}`,
         { completed: !task.completed },
         { headers: { Authorization: `Bearer ${getToken()}` } }
       );
@@ -47,7 +48,7 @@ const TaskList = () => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
     
     try {
-      await axios.delete(`http://localhost:3000/api/tasks/${taskId}`, {
+      await axios.delete(`${baseURL}/tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
       toast.success("Task deleted successfully");

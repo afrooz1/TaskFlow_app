@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 import {
   PieChart,
   Pie,
@@ -53,10 +54,10 @@ const Dashboard = () => {
     setIsLoading(true);
     try {
       const [tasksRes, statsRes] = await Promise.all([
-        axios.get("http://localhost:3000/api/tasks", {
+        axios.get(`${baseURL}/tasks`, {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get("http://localhost:3000/api/tasks/stats", {
+        axios.get(`${baseURL}/tasks/stats`, {
           headers: { Authorization: `Bearer ${token}` }
         })
       ]);
@@ -69,7 +70,7 @@ const Dashboard = () => {
         highPriority: tasksRes.data.filter(t => t.priority === 'high').length,
         mediumPriority: tasksRes.data.filter(t => t.priority === 'medium').length,
         lowPriority: tasksRes.data.filter(t => t.priority === 'low').length,
-        overdue: tasksRes.data.filter(t => 
+        overdue: tasksRes.data.filter(t =>
           t.dueDate && new Date(t.dueDate) < new Date() && !t.completed
         ).length
       });
@@ -125,30 +126,30 @@ const Dashboard = () => {
         <>
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard 
-              title="Total Tasks" 
-              value={stats.total} 
-              icon={<FiList className="text-cyber-blue-600" />} 
+            <StatCard
+              title="Total Tasks"
+              value={stats.total}
+              icon={<FiList className="text-cyber-blue-600" />}
               color="bg-cyber-blue-100"
             />
-            <StatCard 
-              title="Completed" 
-              value={stats.completed} 
-              icon={<FiCheck className="text-green-600" />} 
+            <StatCard
+              title="Completed"
+              value={stats.completed}
+              icon={<FiCheck className="text-green-600" />}
               color="bg-green-100"
               percentage={stats.total ? Math.round((stats.completed / stats.total) * 100) : 0}
             />
-            <StatCard 
-              title="Pending" 
-              value={stats.pending} 
-              icon={<FiClock className="text-yellow-600" />} 
+            <StatCard
+              title="Pending"
+              value={stats.pending}
+              icon={<FiClock className="text-yellow-600" />}
               color="bg-yellow-100"
               percentage={stats.total ? Math.round((stats.pending / stats.total) * 100) : 0}
             />
-            <StatCard 
-              title="Overdue" 
-              value={stats.overdue} 
-              icon={<FiClock className="text-red-600" />} 
+            <StatCard
+              title="Overdue"
+              value={stats.overdue}
+              icon={<FiClock className="text-red-600" />}
               color="bg-red-100"
             />
           </div>
@@ -266,23 +267,21 @@ const Dashboard = () => {
                     </div>
                     <div className="flex items-center gap-3">
                       <span
-                        className={`text-xs px-2 py-1 rounded-full ${
-                          task.completed
+                        className={`text-xs px-2 py-1 rounded-full ${task.completed
                             ? "bg-green-100 text-green-800"
                             : "bg-yellow-100 text-yellow-800"
-                        }`}
+                          }`}
                       >
                         {task.completed ? "Completed" : "Pending"}
                       </span>
                       {task.priority && (
                         <span
-                          className={`text-xs px-2 py-1 rounded-full ${
-                            task.priority === "high"
+                          className={`text-xs px-2 py-1 rounded-full ${task.priority === "high"
                               ? "bg-red-100 text-red-800"
                               : task.priority === "medium"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-blue-100 text-blue-800"
-                          }`}
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-blue-100 text-blue-800"
+                            }`}
                         >
                           {task.priority}
                         </span>
@@ -330,9 +329,8 @@ const StatCard = ({ title, value, icon, color, percentage }) => (
         <div className="mt-4">
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
-              className={`h-2 rounded-full ${
-                title === "Completed" ? "bg-green-500" : "bg-yellow-500"
-              }`}
+              className={`h-2 rounded-full ${title === "Completed" ? "bg-green-500" : "bg-yellow-500"
+                }`}
               style={{ width: `${percentage}%` }}
             ></div>
           </div>

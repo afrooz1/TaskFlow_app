@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -58,7 +59,7 @@ const Register = () => {
     setIsLoading(true);
     try {
       const { confirmPassword, ...dataToSend } = formData;
-      const res = await axios.post('http://localhost:3000/api/auth/register', dataToSend);
+      const res = await axios.post(`${baseURL}/auth/register`, dataToSend);
 
       toast.success('🎉 Registration successful! Redirecting to login...');
       console.log('Registration success:', res.data);

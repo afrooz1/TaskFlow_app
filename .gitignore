@@ -32,6 +32,9 @@ frontend/build/
 backend/node_modules/
 backend/.env
 
+server/node_modules/
+server/.env
+
 # Terraform
 terraform.tfstate*
 .terraform/

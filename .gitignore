@@ -1,0 +1,44 @@
+# Node.js
+node_modules/
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build
+build/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Coverage & testing
+coverage/
+*.lcov
+
+# React-specific
+frontend/node_modules/
+frontend/build/
+
+# Backend-specific
+backend/node_modules/
+backend/.env
+
+# Terraform
+terraform.tfstate*
+.terraform/
+
+# Docker
+*.dockerfile
+*.tar
+
+# GitHub Actions
+.github/workflows/*-secrets.yml
